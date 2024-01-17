@@ -172,14 +172,16 @@ export function formatToCPA005(eftGenerator) {
                     segment.bankInstitutionNumber.padStart(4, '0') +
                     segment.bankTransitNumber.padStart(5, '0') +
                     segment.bankAccountNumber.padEnd(12, ' ') +
-                    segment.itemTraceNumber ? `${segment.itemTraceNumber}${(segmentIndex + 1).toString().padStart(4, '0')}` : ''.padStart(22, '0') +
+                    (segment.itemTraceNumber === undefined
+                        ? `${segment.itemTraceNumber}${(segmentIndex + 1).toString().padStart(4, '0')}`
+                        : ''.padStart(22, '0')) +
                     ''.padStart(3, '0') +
                     originatorShortName.padEnd(15, ' ').slice(0, 15) +
                     segment.payeeName.padEnd(30, ' ').slice(0, 30) +
                     eftConfig.originatorLongName.padEnd(30, ' ').slice(0, 30) +
                     eftConfig.originatorId.slice(0, 5).padEnd(10, ' ') +
                     crossReferenceNumber.padEnd(19, ' ').slice(0, 19) +
-                    `0219TTTTT` +
+                    '0219TTTTT' +
                     ''.padEnd(12, ' ') +
                     ''.padEnd(15, ' ') +
                     ''.padEnd(22, ' ') +
