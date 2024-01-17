@@ -8,6 +8,7 @@
   "description": "Formats Electronic Funds Transfer (EFT) data into the CPA 005 standard.",
   "exports": "./index.js",
   "scripts": {
+    "build": "tsc",
     "test": "cross-env NODE_ENV=dev DEBUG=eft-generator:* mocha",
     "coverage": "cross-env NODE_ENV=dev DEBUG=eft-generator:* c8 mocha"
   },
