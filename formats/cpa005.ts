@@ -263,11 +263,11 @@ export function formatToCPA005(eftGenerator: EFTGenerator): string {
         originatorShortName.padEnd(15, ' ').slice(0, 15) +
         segment.payeeName.padEnd(30, ' ').slice(0, 30) +
         eftConfig.originatorLongName.padEnd(30, ' ').slice(0, 30) +
-        eftConfig.originatorId.padEnd(10, ' ') +
+        eftConfig.originatorId.slice(0,5).padEnd(10, ' ') +
         crossReferenceNumber.padEnd(19, ' ').slice(0, 19) +
-        ''.padStart(1, '0') +
-        ''.padEnd(12, ' ') +
-        ''.padEnd(15, ' ') +
+        `0219TTTTT` + // instutional id number + transit number for returns - 9 // Required? should come from eftconfig probably?
+        ''.padEnd(12, ' ') + // originators account number for return - 12 // optional from eftConfig probably?
+        ''.padEnd(15, ' ') + // oringinators Sundry information ? - 15 // optional from transaction segment maybe?
         ''.padEnd(22, ' ') +
         ''.padEnd(2, ' ') +
         ''.padStart(11, '0')
