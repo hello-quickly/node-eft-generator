@@ -259,8 +259,8 @@ export function formatToCPA005(eftGenerator: EFTGenerator): string {
         segment.bankTransitNumber.padStart(5, '0') +
         segment.bankAccountNumber.padEnd(12, ' ') +
         (segment.itemTraceNumber === undefined
-          ? `${segment.itemTraceNumber}${(segmentIndex + 1).toString().padStart(4, '0')}`
-          : ''.padStart(22, '0')) + // itemTraceNumber addition to support ATB formatting
+          ? ''.padStart(22, '0')
+          : `${segment.itemTraceNumber}${(segmentIndex + 1).toString().padStart(4, '0')}`) + // itemTraceNumber addition to support ATB formatting
         ''.padStart(3, '0') +
         originatorShortName.padEnd(15, ' ').slice(0, 15) +
         segment.payeeName.padEnd(30, ' ').slice(0, 30) +
