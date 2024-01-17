@@ -169,19 +169,19 @@ export function formatToCPA005(eftGenerator) {
                         .padStart(10, '0') +
                     paymentJulianDate +
                     ''.padEnd(1, ' ') +
-                    segment.bankInstitutionNumber.padStart(3, '0') +
+                    segment.bankInstitutionNumber.padStart(4, '0') +
                     segment.bankTransitNumber.padStart(5, '0') +
                     segment.bankAccountNumber.padEnd(12, ' ') +
-                    ''.padStart(22, '0') +
+                    segment.itemTraceNumber ? `${segment.itemTraceNumber}${(segmentIndex + 1).toString().padStart(4, '0')}` : ''.padStart(22, '0') + // itemTraceNumber addition to support ATB formatting
                     ''.padStart(3, '0') +
                     originatorShortName.padEnd(15, ' ').slice(0, 15) +
                     segment.payeeName.padEnd(30, ' ').slice(0, 30) +
                     eftConfig.originatorLongName.padEnd(30, ' ').slice(0, 30) +
-                    eftConfig.originatorId.padEnd(10, ' ') +
+                    eftConfig.originatorId.slice(0,5).padEnd(10, ' ') +
                     crossReferenceNumber.padEnd(19, ' ').slice(0, 19) +
-                    ''.padStart(1, '0') +
-                    ''.padEnd(12, ' ') +
-                    ''.padEnd(15, ' ') +
+                    `0219TTTTT` + // instutional id number + transit number for returns - 9 // Required? should come from eftconfig probably?
+                    ''.padEnd(12, ' ') + // originators account number for return - 12 // optional from eftConfig probably?
+                    ''.padEnd(15, ' ') + // oringinators Sundry information ? - 15 // optional from transaction segment maybe?
                     ''.padEnd(22, ' ') +
                     ''.padEnd(2, ' ') +
                     ''.padStart(11, '0');
