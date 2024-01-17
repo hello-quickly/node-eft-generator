@@ -63,6 +63,9 @@ export interface EFTTransactionSegment {
    */
   bankTransitNumber: string
 
+  /** ATB Specific Fill */
+  itemTraceNumber?: string
+
   /**
    * Up to 12 digits
    */
