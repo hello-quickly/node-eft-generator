@@ -17,8 +17,8 @@ export interface EFTTransactionSegment {
     paymentDate?: Date;
     bankInstitutionNumber: string;
     bankTransitNumber: string;
+    itemTraceNumber?: string;
     bankAccountNumber: string;
     payeeName: string;
     crossReferenceNumber?: string;
-    itemTraceNumber?: string;
 }
