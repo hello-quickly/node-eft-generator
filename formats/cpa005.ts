@@ -254,7 +254,6 @@ export function formatToCPA005(eftGenerator: EFTGenerator): string {
           .toString()
           .padStart(10, '0') +
         paymentJulianDate +
-        ''.padEnd(1, ' ') +
         segment.bankInstitutionNumber.padStart(4, '0') +
         segment.bankTransitNumber.padStart(5, '0') +
         segment.bankAccountNumber.padEnd(12, ' ') +
