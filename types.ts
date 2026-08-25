@@ -28,6 +28,21 @@ export interface EFTConfiguration {
   destinationDataCentre?: string
 
   destinationCurrency?: 'CAD' | 'USD'
+
+  /**
+   * Three digits
+   */
+  returnBankInstitutionNumber?: string
+
+  /**
+   * Five digits
+   */
+  returnBankTransitNumber?: string
+
+  /**
+   * Up to 12 digits
+   */
+  returnBankAccountNumber?: string
 }
 
 export interface EFTTransaction {

@@ -7,7 +7,10 @@ const config = {
     originatorShortName: 'SSM',
     fileCreationNumber: '0001',
     destinationCurrency: 'CAD',
-    destinationDataCentre: '123'
+    destinationDataCentre: '123',
+    returnBankInstitutionNumber: '111',
+    returnBankTransitNumber: '22222',
+    returnBankAccountNumber: '333333333'
 };
 describe('eft-generator - CPA-005', () => {
     it('Creates valid CPA-005 formatted output', () => {
@@ -122,6 +125,51 @@ describe('eft-generator - CPA-005', () => {
                 originatorLongName: 'Name',
                 fileCreationNumber: '1234',
                 destinationCurrency: 'AUD'
+            });
+            try {
+                eftGenerator.toCPA005();
+                assert.fail();
+            }
+            catch {
+                assert.ok(true);
+            }
+        });
+        it('Throws error when returnBankInstitutionNumber is invalid.', () => {
+            const eftGenerator = new EFTGenerator({
+                originatorId: '1',
+                originatorLongName: 'Name',
+                fileCreationNumber: '1234',
+                returnBankInstitutionNumber: '1234'
+            });
+            try {
+                eftGenerator.toCPA005();
+                assert.fail();
+            }
+            catch {
+                assert.ok(true);
+            }
+        });
+        it('Throws error when returnBankTransitNumber is invalid.', () => {
+            const eftGenerator = new EFTGenerator({
+                originatorId: '1',
+                originatorLongName: 'Name',
+                fileCreationNumber: '1234',
+                returnBankTransitNumber: '123456'
+            });
+            try {
+                eftGenerator.toCPA005();
+                assert.fail();
+            }
+            catch {
+                assert.ok(true);
+            }
+        });
+        it('Throws error when returnBankAccountNumber is invalid.', () => {
+            const eftGenerator = new EFTGenerator({
+                originatorId: '1',
+                originatorLongName: 'Name',
+                fileCreationNumber: '1234',
+                returnBankAccountNumber: '1234567890123'
             });
             try {
                 eftGenerator.toCPA005();
