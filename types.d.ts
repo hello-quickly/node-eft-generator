@@ -6,6 +6,9 @@ export interface EFTConfiguration {
     fileCreationDate?: Date;
     destinationDataCentre?: string;
     destinationCurrency?: 'CAD' | 'USD';
+    returnBankInstitutionNumber?: string;
+    returnBankTransitNumber?: string;
+    returnBankAccountNumber?: string;
 }
 export interface EFTTransaction {
     recordType: 'C' | 'D';

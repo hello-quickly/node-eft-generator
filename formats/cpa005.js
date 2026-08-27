@@ -32,6 +32,15 @@ function validateConfig(eftConfig) {
     if (!['', 'CAD', 'USD'].includes(eftConfig.destinationCurrency ?? '')) {
         throw new Error(`Unsupported destinationCurrency: ${eftConfig.destinationCurrency}`);
     }
+    if (!/^\d{0,3}$/.test(eftConfig.returnBankInstitutionNumber ?? '')) {
+        throw new Error(`returnBankInstitutionNumber should be 1 to 3 digits: ${eftConfig.returnBankInstitutionNumber}`);
+    }
+    if (!/^\d{0,5}$/.test(eftConfig.returnBankTransitNumber ?? '')) {
+        throw new Error(`returnBankTransitNumber should be 1 to 5 digits: ${eftConfig.returnBankTransitNumber}`);
+    }
+    if (!/^\d{0,12}$/.test(eftConfig.returnBankAccountNumber ?? '')) {
+        throw new Error(`returnBankAccountNumber should be 1 to 12 digits: ${eftConfig.returnBankAccountNumber}`);
+    }
     return warningCount;
 }
 function validateTransactions(eftTransactions) {
@@ -94,6 +103,17 @@ function validateTransactions(eftTransactions) {
 export function validateCPA005(eftGenerator) {
     return (validateConfig(eftGenerator.getConfiguration()) +
         validateTransactions(eftGenerator.getTransactions()));
+}
+function formatReturnInfo(eftConfig) {
+    const returnInstitutionAndTransit = eftConfig.returnBankInstitutionNumber === undefined &&
+        eftConfig.returnBankTransitNumber === undefined
+        ? ''.padEnd(9, ' ')
+        : (eftConfig.returnBankInstitutionNumber ?? '').padStart(4, '0') +
+            (eftConfig.returnBankTransitNumber ?? '').padStart(5, '0');
+    const returnAccountNumber = eftConfig.returnBankAccountNumber === undefined
+        ? ''.padEnd(12, ' ')
+        : eftConfig.returnBankAccountNumber.padEnd(12, ' ');
+    return returnInstitutionAndTransit + returnAccountNumber;
 }
 function formatHeader(eftConfig) {
     const fileCreationJulianDate = toJulianDate(eftConfig.fileCreationDate ?? new Date());
@@ -180,8 +200,7 @@ export function formatToCPA005(eftGenerator) {
                     eftConfig.originatorLongName.padEnd(30, ' ').slice(0, 30) +
                     eftConfig.originatorId.slice(0, 5).padEnd(10, ' ') +
                     crossReferenceNumber.padEnd(19, ' ').slice(0, 19) +
-                    ''.padEnd(9, ' ') +
-                    ''.padEnd(12, ' ') +
+                    formatReturnInfo(eftConfig) +
                     ''.padEnd(15, ' ') +
                     ''.padEnd(22, ' ') +
                     ''.padEnd(2, ' ') +
